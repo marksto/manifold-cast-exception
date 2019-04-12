@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "objProp": {
+      "text": "flora"
+    },
+    "refObjProp": {
+      "text": "plant"
+    }
+  },
+  {
+    "id": 2,
+    "objProp": {
+      "text": "fauna"
+    },
+    "refObjProp": {
+      "text": "piggy"
+    }
+  },
+  {
+    "id": 3,
+    "objProp": {
+      "text": "fauna"
+    },
+    "refObjProp": {
+      "text": "birdy"
+    }
+  }
+]

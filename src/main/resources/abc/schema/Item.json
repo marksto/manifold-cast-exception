@@ -1,10 +1,27 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://marksto.name/schemas/Item.json",
+  "definitions": {
+    "Category": {
+      "type": "object",
+      "properties": {
+        "text": "string"
+      }
+    }
+  },
   "type": "object",
   "properties": {
     "id": {
       "type": "integer"
+    },
+    "objProp": {
+      "type": "object",
+      "properties": {
+        "text": "string"
+      }
+    },
+    "refObjProp": {
+      "$ref": "#/definitions/Category"
     }
   }
 }
