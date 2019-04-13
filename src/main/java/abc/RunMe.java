@@ -18,24 +18,29 @@ import static java.util.stream.Collectors.toMap;
 public class RunMe {
   static File single_item, items_array, complex_items_array, invalid_complex_items_array;
 
-  public static void main(String[] args) throws URISyntaxException {
+  private static void setUpResources() throws URISyntaxException {
     ClassLoader classLoader = RunMe.class.getClassLoader();
     single_item = new File(classLoader.getResource("abc.data/single_item.json").toURI());
     items_array = new File(classLoader.getResource("abc.data/items_array.json").toURI());
     complex_items_array = new File(classLoader.getResource("abc.data/complex_items_array.json").toURI());
     invalid_complex_items_array = new File(classLoader.getResource("abc.data/invalid_complex_items_array.json").toURI());
+  }
+
+  public static void main(String[] args) throws URISyntaxException {
+    setUpResources();
 
     // successful pass is a precondition
     loadSingleItem();
 
-//    loadItemsArray_PlainInterface();
-//    loadItemsArray_ExtraMediateType();
+    loadItemsArray_PlainInterface();
+    loadItemsArray_ExtraMediateType();
 
     // both should pass as well
-//    loadComplexItemsArray_objectProperty();
-//    loadComplexItemsArray_refObjectProperty();
+    loadComplexItemsArray_objectProperty();
+    loadComplexItemsArray_refObjectProperty();
 
-    loadComplexItemsArray_invalidPropertyType();
+    // should fail — as expected
+    //loadComplexItemsArray_invalidPropertyType();
   }
 
   private static void loadSingleItem() {
@@ -102,17 +107,10 @@ public class RunMe {
   private static void loadComplexItemsArray_invalidPropertyType() {
     List<Item> items = IJsonList.<Item>load().fromJsonFile(invalid_complex_items_array);
 
+    // should pass
     items.stream().map(item -> item.getRefObjProp()).collect(toList());
-    items.stream().map(item -> item.getRefObjProp().getText()).collect(toList());
 
-    Map<Integer, Item> itemsMap = items.stream()
-            .collect(toMap(item -> item.getId(), identity()));
-    Map<String, List<Item>> groupedItemsMap = itemsMap.values().stream()
-            .collect(groupingBy(item -> item.getRefObjProp().getText()));
-    groupedItemsMap.entrySet().stream()
-            .forEach(e -> System.out.println(e.getKey() + " —> " + e.getValue().stream()
-                    .map(objProp -> Objects.toString(objProp.getId()))
-                    .collect(Collectors.joining(", "))
-            ));
+    // fails with compilation error
+    items.stream().map(item -> item.getRefObjProp().getText()).collect(toList());
   }
 }
