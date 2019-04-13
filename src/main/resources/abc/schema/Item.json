@@ -1,14 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "http://marksto.name/schemas/Item.json",
-  "definitions": {
-    "Category": {
-      "type": "object",
-      "properties": {
-        "text": "string"
-      }
-    }
-  },
   "type": "object",
   "properties": {
     "id": {
@@ -21,7 +13,10 @@
       }
     },
     "refObjProp": {
-      "$ref": "#/definitions/Category"
+      "$ref": "Category.json"
     }
-  }
+  },
+  "required": [
+    "id"
+  ]
 }
